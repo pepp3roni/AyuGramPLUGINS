@@ -40,6 +40,7 @@ include(cmake/td_mtproto.cmake)
 include(cmake/td_scheme.cmake)
 include(cmake/td_tde2e.cmake)
 include(cmake/td_ui.cmake)
+include(cmake/td_python.cmake)
 include(cmake/telegram_apple_swift_runtime.cmake)
 include(cmake/generate_appstream_changelog.cmake)
 
@@ -102,6 +103,9 @@ PRIVATE
 
     # AyuGram filters
     ayugram::lib_icu
+
+    # AyuGram plugins (embedded CPython)
+    ayugram::python
 )
 
 set(ayugram_files
@@ -252,6 +256,19 @@ set(ayugram_files
         ayu/data/entities.h
         ayu/data/ayu_database.cpp
         ayu/data/ayu_database.h
+
+        ayu/plugins/plugin_runtime.cpp
+        ayu/plugins/plugin_runtime.h
+        ayu/plugins/plugin.cpp
+        ayu/plugins/plugin.h
+        ayu/plugins/plugin_manager.cpp
+        ayu/plugins/plugin_manager.h
+        ayu/plugins/plugin_settings_store.cpp
+        ayu/plugins/plugin_settings_store.h
+        ayu/plugins/sdk/sdk_module.cpp
+        ayu/plugins/sdk/sdk_module.h
+        ayu/ui/settings/settings_plugins.cpp
+        ayu/ui/settings/settings_plugins.h
 
         info/profile/info_profile_music_button.cpp
         info/profile/info_profile_music_button.h

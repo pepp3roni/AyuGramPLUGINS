@@ -97,6 +97,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
 #include "ayu/ayu_worker.h"
 #include "ayu/utils/telegram_helpers.h"
 #include "ayu/features/forward/ayu_forward.h"
+#include "ayu/plugins/plugin_manager.h"
 
 
 namespace {
@@ -4057,6 +4058,9 @@ void ApiWrap::sendShortcutMessages(
 void ApiWrap::sendMessage(
 		MessageToSend &&message,
 		std::optional<MsgId> localMessageId) {
+	if (!AyuPlugins::PluginManager::instance().dispatchOnSendMessage(message)) {
+		return;
+	}
 	applyGhostScheduling(_session, message.action.options);
 	const auto clearReplyTo = prependPseudoReply(message);
 

@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:plugins.exteragram.app)",
+      "Bash(xargs grep -l \"ayu\")",
+      "Read(//c/tmp/**)",
+      "Bash(gh release *)",
+      "Bash(rm -rf sdk_stubs)",
+      "Bash(mkdir sdk_stubs)",
+      "Bash(curl -sL \"https://github.com/exteraSquad/plugins-pysdk-builds/releases/download/sdk-v1.4.4.1-beta-25633423647-1/stubs.zip\" -o stubs.zip)",
+      "Bash(unzip -o -q stubs.zip -d sdk_stubs)",
+      "Bash(echo \"=== EXIT: $? ===\")",
+      "Read(//tmp/**)",
+      "Bash(unzip -o -q pyi-files.zip -d pyi)"
+    ]
+  }
+}

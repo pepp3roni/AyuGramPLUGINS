@@ -7,6 +7,7 @@
 #include "ayu/ui/boxes/plugin_info_box.h"
 
 #include "apiwrap.h"
+#include "ayu/plugins/plugin_manager.h"
 #include "core/file_utilities.h"
 #include "core/ui_integration.h"
 #include "data/data_document.h"
@@ -341,14 +342,25 @@ void FillPluginInfoBox(
 
 	Ui::AddSkip(box->verticalLayout());
 
-	box->verticalLayout()->add(
-		object_ptr<Ui::FlatLabel>(
-			box->verticalLayout(),
-			tr::ayu_PluginsNotAvailable(),
-			st::boxDividerLabel),
-		st::boxRowPadding);
-
-	Ui::AddSkip(box->verticalLayout());
+	box->addLeftButton(
+		tr::ayu_PluginInstall(),
+		[=] {
+			auto error = QString();
+			auto &manager = AyuPlugins::PluginManager::instance();
+			const auto installedId = manager.installFromFile(
+				pluginPath,
+				&error);
+			if (installedId.isEmpty()) {
+				controller->showToast(tr::ayu_PluginInstallFailed(
+					tr::now,
+					lt_error,
+					error));
+				return;
+			}
+			manager.enable(installedId, &error);
+			controller->showToast(tr::ayu_PluginInstalled(tr::now));
+			box->closeBox();
+		});
 
 	const auto closeButton = box->addButton(
 		tr::lng_close(),
